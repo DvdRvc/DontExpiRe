@@ -1,5 +1,6 @@
 package service;
 
+import configuration.UserPrincipal;
 import lombok.AllArgsConstructor;
 import model.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +23,7 @@ public class CustomUserDetailService implements UserDetailsService {
         if(user == null){
             throw new UsernameNotFoundException("This user doesn't exist!");
         }
-            return user;
+            return new UserPrincipal(user);
 
     }
 }
