@@ -19,6 +19,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     }
 
+    default User findByUsername(String username){
+        return null;
+    }
+
+
     @Override
     default <S extends User> S saveAndFlush(S entity) {
         return null;
@@ -28,6 +33,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     default <S extends User> List<S> saveAllAndFlush(Iterable<S> entities) {
         return List.of();
     }
+
 
     @Override
     default void deleteAllInBatch(Iterable<User> entities) {
