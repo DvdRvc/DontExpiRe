@@ -1,13 +1,13 @@
-package service;
+package org.example.service;
 
-import configuration.UserPrincipal;
+import org.example.configuration.UserPrincipal;
 import lombok.AllArgsConstructor;
-import model.User;
+import org.example.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import repository.UserRepository;
+import org.example.repository.UserRepository;
 
 @AllArgsConstructor
 @Service

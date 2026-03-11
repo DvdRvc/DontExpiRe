@@ -1,8 +1,7 @@
-package model;
+package org.example.model;
 
-import enums.UserGender;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.example.enums.UserGender;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +11,14 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 @AllArgsConstructor
+@Entity
 @Table(name = "users")
 public class User {
 
-    int userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
+
     String userName;
     String userPassword;
     String userEMail;

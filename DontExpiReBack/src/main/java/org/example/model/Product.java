@@ -1,6 +1,6 @@
-package model;
+package org.example.model;
 
-import enums.ProductType;
+import org.example.enums.ProductType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
