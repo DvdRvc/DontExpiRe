@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import lombok.AllArgsConstructor;
+import org.example.dto.LoginRequest;
 import org.example.dto.RegisterRequest;
 import org.example.model.User;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,12 @@ public class UserController {
     public String register(@RequestBody RegisterRequest request) {
         userService.register(request);
         return "User registered successfully";
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody LoginRequest request) {
+        userService.login(request);
+        return "User login was sucsessful!";
     }
 
 
