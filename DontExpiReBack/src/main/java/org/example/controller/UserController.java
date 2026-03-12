@@ -1,15 +1,16 @@
 package org.example.controller;
 
 import lombok.AllArgsConstructor;
+import org.example.dto.RegisterRequest;
 import org.example.model.User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.example.service.UserService;
 
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/user-controller")
 public class UserController {
 
     private UserService userService;
@@ -18,6 +19,22 @@ public class UserController {
     public List<User> getUsers(){
         return userService.getUsers();
     }
+
+    @GetMapping("/remove-user")
+    public void removeUser(User user){
+        userService.removeUser(user);
+    }
+
+    @PostMapping("/register")
+    public String register(@RequestBody RegisterRequest request) {
+        userService.register(request);
+        return "User registered successfully";
+    }
+
+
+
+
+
 
 
 }

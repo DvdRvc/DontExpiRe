@@ -22,6 +22,7 @@ public class User {
     String userName;
     String userPassword;
     String userEMail;
+    @Enumerated(EnumType.STRING)
     UserGender userGender;
 
 
