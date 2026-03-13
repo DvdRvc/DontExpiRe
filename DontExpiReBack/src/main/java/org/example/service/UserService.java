@@ -29,6 +29,10 @@ public class UserService {
 
     public void register(RegisterRequest request) {
 
+        if(userRepository.existsByUserEMail(request.getUserEMail())){
+            throw new RuntimeException("User exists!");
+        }
+
         User user = new User();
 
         user.setUserName(request.getUserName());
