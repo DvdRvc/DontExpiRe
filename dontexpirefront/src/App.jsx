@@ -1,7 +1,14 @@
 import './index.css'
 import Register from "./pages/Register.jsx";
+import { Routes, Route } from "react-router-dom"
 import Login from "./pages/Login.jsx";
 
 export default function App() {
-    return <Register />;
+    return (
+        <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+        </Routes>
+    )
 }

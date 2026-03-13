@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 export default function Register() {
     return (
         <div className="min-h-screen bg-[#121212] text-white flex items-center justify-center px-4">
@@ -96,12 +98,12 @@ export default function Register() {
 
                         <p className="mt-8 text-center text-sm text-white/60">
                             Already have an account?{" "}
-                            <button
-                                type="button"
+                            <Link
+                                to="/login"
                                 className="font-semibold text-[#27AE60] hover:opacity-80"
                             >
                                 Sign in
-                            </button>
+                            </Link>
                         </p>
                     </div>
                 </div>
