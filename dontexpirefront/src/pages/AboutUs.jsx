@@ -1,8 +1,12 @@
+import FloatingFood from "../components/FloatingFood";
+
 export default function About() {
     return (
         <>
-            <div className="bg-[#121212] text-white py-16 px-6">
-                <div className="max-w-5xl mx-auto space-y-16">
+
+            <div className="relative bg-[#121212] text-white py-16 px-6 overflow-hidden">
+                <FloatingFood />
+                <div className="relative z-10 max-w-5xl mx-auto space-y-16">
 
                     {/* ABOUT PROJECT */}
                     <section>

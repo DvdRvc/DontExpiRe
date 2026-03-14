@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom"
+import FloatingFood from "../components/FloatingFood";
 
 export default function Login() {
     return (
         <div className="min-h-screen bg-[#121212] text-white flex items-center justify-center px-4">
+            <FloatingFood />
             <div className="grid w-full max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-2xl backdrop-blur-md md:grid-cols-2">
                 <div className="hidden md:flex flex-col justify-between bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] p-10 border-r border-white/10">
                     <div>
