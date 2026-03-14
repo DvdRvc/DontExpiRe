@@ -1,10 +1,50 @@
+import { useState } from "react";
 import { Link } from "react-router-dom"
 import FloatingFood from "../components/FloatingFood";
 
+
 export default function Login() {
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch("http://localhost:8080/user-controller/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    userEMail: email,
+                    userPassword: password,
+                }),
+            });
+
+            const text = await response.text();
+            console.log("Response from backend:", text);
+
+            if (response.ok) {
+                setError("");
+                console.log("Login successful:", text);
+            } else {
+                setError(text || "Login failed: E-mail or password is wrong!");
+            }
+        } catch (error) {
+            console.error("Connection error:", error);
+            setError("Cannot connect to server");
+        }
+    };
+
+
     return (
         <div className="min-h-screen bg-[#121212] text-white flex items-center justify-center px-4">
+
             <FloatingFood />
+
             <div className="grid w-full max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-2xl backdrop-blur-md md:grid-cols-2">
                 <div className="hidden md:flex flex-col justify-between bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] p-10 border-r border-white/10">
                     <div>
@@ -49,7 +89,7 @@ export default function Login() {
                             </p>
                         </div>
 
-                        <form className="space-y-5">
+                        <form className="space-y-5" onSubmit={handleLogin}>
                             <div>
                                 <label htmlFor="email" className="mb-2 block text-sm font-medium text-white/90">
                                     Email address
@@ -58,6 +98,8 @@ export default function Login() {
                                     id="email"
                                     type="email"
                                     placeholder="enter@email.com"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     className="w-full rounded-2xl border border-white/10 bg-[#1B1B1B] px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-[#27AE60] focus:ring-2 focus:ring-[#27AE60]/20"
                                 />
                             </div>
@@ -78,6 +120,8 @@ export default function Login() {
                                     id="password"
                                     type="password"
                                     placeholder="••••••••"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     className="w-full rounded-2xl border border-white/10 bg-[#1B1B1B] px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-[#27AE60] focus:ring-2 focus:ring-[#27AE60]/20"
                                 />
                             </div>
@@ -97,9 +141,12 @@ export default function Login() {
                             </button>
                         </form>
 
-                        <div className="mt-6 rounded-2xl border border-[#E74C3C]/30 bg-[#E74C3C]/10 px-4 py-3 text-sm text-white/85">
-                            Demo message: Incorrect email or password.
-                        </div>
+                        {error && (
+                            <div className="mt-6 rounded-2xl border border-[#E74C3C]/30 bg-[#E74C3C]/10 px-4 py-3 text-sm text-white/85">
+                                {error}
+                            </div>
+                        )}
+
 
                         <div className="my-6 flex items-center gap-4">
                             <div className="h-px flex-1 bg-white/10" />
@@ -123,7 +170,6 @@ export default function Login() {
                                 Sign up
                             </Link>
                         </p>
-
                     </div>
                 </div>
             </div>

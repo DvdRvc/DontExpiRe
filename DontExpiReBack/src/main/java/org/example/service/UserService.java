@@ -47,7 +47,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public String login(LoginRequest request){
+    public void login(LoginRequest request){
         String userEmail = request.getUserEMail();
         User user;
 
@@ -58,7 +58,6 @@ public class UserService {
             throw new InvalidCredentialsException("Wrong E-mail or password");
         }
 
-        return "Login sucsessful";
     }
 
 

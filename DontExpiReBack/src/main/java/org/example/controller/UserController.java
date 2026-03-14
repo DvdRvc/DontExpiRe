@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.example.dto.LoginRequest;
 import org.example.dto.RegisterRequest;
 import org.example.model.User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.example.service.UserService;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/user-controller")
+@CrossOrigin(origins = "http://localhost:5173")
 public class UserController {
 
     private UserService userService;
@@ -27,15 +29,15 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
         userService.register(request);
-        return "User registered successfully";
+        return ResponseEntity.ok("Registration successful");
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest request) {
+    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
         userService.login(request);
-        return "User login was sucsessful!";
+        return ResponseEntity.ok("Login successful");
     }
 
 
