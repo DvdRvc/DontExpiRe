@@ -3,6 +3,7 @@ package org.example.service;
 import lombok.AllArgsConstructor;
 import org.example.dto.LoginRequest;
 import org.example.dto.RegisterRequest;
+import org.example.error.InvalidCredentialsException;
 import org.example.model.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,11 +51,11 @@ public class UserService {
         String userEmail = request.getUserEMail();
         User user;
 
-        user = userRepository.findByUserEMail(userEmail).orElseThrow(()-> new RuntimeException("User doesn't exist"));
+        user = userRepository.findByUserEMail(userEmail).orElseThrow(()-> new InvalidCredentialsException("Wrong E-mail or password"));
         //lambda function tells us that exception are only made when necessary
 
         if (!passwordEncoder.matches(request.getUserPassword(), user.getUserPassword())) {
-            throw new RuntimeException("Invalid password");
+            throw new InvalidCredentialsException("Wrong E-mail or password");
         }
 
         return "Login sucsessful";
