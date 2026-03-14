@@ -16,14 +16,15 @@ public class CustomUserDetailService implements UserDetailsService {
     private final UserRepository userRepository;
 
     //with this we can fetch users from the repo
+
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
+        User user = userRepository.findByUserEMail(userEmail)
+                .orElseThrow(() -> new UsernameNotFoundException("This user doesn't exist!"));
 
-        if(user == null){
-            throw new UsernameNotFoundException("This user doesn't exist!");
-        }
-            return new UserPrincipal(user);
-
+        return new UserPrincipal(user);
     }
+    //It uses E-mail bcs of JWT implementation
+
+
 }
