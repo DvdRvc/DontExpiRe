@@ -3,8 +3,7 @@ package org.example.service;
 import lombok.AllArgsConstructor;
 import org.example.dto.LoginRequest;
 import org.example.dto.RegisterRequest;
-import org.example.error.InvalidAuthenticationJWT;
-import org.example.error.InvalidCredentialsException;
+import org.example.error.*;
 import org.example.model.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,14 +36,26 @@ public class UserService {
     public void register(RegisterRequest request) {
 
         if(userRepository.existsByUserEMail(request.getUserEMail())){
-            throw new RuntimeException("User exists!");
+            throw new UserExistsException("User exists with this E-mail!");
+        }
+
+        if(request.getUserName().length() <= 5){
+            throw new InvalidUserNameLength("Name must have at least 5 characters!");
+        }
+
+        if(!request.getUserEMail().contains("@gmail") || !request.getUserEMail().contains("@")){
+            throw new InvadlidEmailForm("The E-mail form is not valid.");
+        }
+
+        if(request.getUserPassword().length() < 8){
+            throw new InvalidPasswordLength("Password must have at least 8 characters!");
         }
 
         User user = new User();
 
         user.setUserName(request.getUserName());
         user.setUserEMail(request.getUserEMail());
-        user.setUserGender(request.getUserGender());
+
 
         user.setUserPassword(
                 bCryptPasswordEncoder.encode(request.getUserPassword())

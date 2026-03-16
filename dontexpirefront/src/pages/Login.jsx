@@ -39,7 +39,7 @@ export default function Login() {
                 setError("");
                 console.log("Login successful:", text);
             } else {
-                setError(text || "Login failed: E-mail or password is wrong!");
+                setError("Login failed: E-mail or password is wrong!");
             }
         } catch (error) {
             console.error("Connection error:", error);
@@ -133,13 +133,15 @@ export default function Login() {
                                     className="w-full rounded-2xl border border-white/10 bg-[#1B1B1B] px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-[#27AE60] focus:ring-2 focus:ring-[#27AE60]/20"
                                 />
                             </div>
-
+                            {/*
                             <div className="flex items-center justify-between text-sm">
                                 <label className="flex items-center gap-2 text-white/70">
                                     <input type="checkbox" className="h-4 w-4 rounded border-white/20 bg-[#1B1B1B]" />
                                     Remember me
                                 </label>
                             </div>
+                             */}
+
 
                             <button
                                 type="submit"

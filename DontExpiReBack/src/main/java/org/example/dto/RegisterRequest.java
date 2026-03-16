@@ -9,7 +9,6 @@ import org.example.enums.UserGender;
 public class RegisterRequest {
 
     private String userName;
-    private String userPassword;
     private String userEMail;
-    private UserGender userGender;
+    private String userPassword;
 }
