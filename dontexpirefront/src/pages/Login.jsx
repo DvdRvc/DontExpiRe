@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"
 import FloatingFood from "../components/FloatingFood";
+import logo from "../assets/logo-icon.svg";
 
 
 
@@ -57,7 +58,11 @@ export default function Login() {
                 <div className="hidden md:flex flex-col justify-between bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] p-10 border-r border-white/10">
                     <div>
                         <div className="mb-6 inline-flex items-center gap-3 rounded-2xl border border-[#27AE60]/30 bg-[#27AE60]/10 px-4 py-2">
-                            <span className="text-2xl">🥬</span>
+                            <img
+                                src={logo}
+                                alt="DontExpiRe logo"
+                                className="w-8 h-8"
+                            />
                             <span className="text-sm font-semibold tracking-wide text-[#27AE60]">DontExpiRe</span>
                         </div>
                         <h1 className="max-w-sm text-4xl font-bold leading-tight">
@@ -85,7 +90,11 @@ export default function Login() {
                     <div className="mx-auto w-full max-w-md">
                         <div className="mb-8 md:hidden">
                             <div className="mb-4 inline-flex items-center gap-3 rounded-2xl border border-[#27AE60]/30 bg-[#27AE60]/10 px-4 py-2">
-                                <span className="text-2xl">🥬</span>
+                                <img
+                                    src={logo}
+                                    alt="DontExpiRe logo"
+                                    className="w-8 h-8"
+                                />
                                 <span className="text-sm font-semibold tracking-wide text-[#27AE60]">DontExpiRe</span>
                             </div>
                         </div>

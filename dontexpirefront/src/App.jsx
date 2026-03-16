@@ -6,6 +6,8 @@ import Login from "./pages/Login.jsx";
 import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
 
+import UserProfile from "./pages/UserProfile.jsx";
+
 export default function App() {
     return (
         <div className="min-h-screen bg-[#121212]">
@@ -16,6 +18,8 @@ export default function App() {
                 <Route path="/about" element={<AboutUs />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+
+                <Route path="/profile" element={<UserProfile />} />
             </Routes>
         </div>
     );

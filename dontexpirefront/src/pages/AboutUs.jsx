@@ -1,4 +1,5 @@
 import FloatingFood from "../components/FloatingFood";
+import logoFull from "../assets/full-logo.svg";
 
 export default function About() {
     return (
@@ -66,13 +67,18 @@ export default function About() {
                         </h2>
 
                         <ul className="text-white/80 space-y-2">
-                            <li>⚡ React + Vite (Frontend)</li>
-                            <li>🎨 Tailwind CSS (UI Styling)</li>
-                            <li>☕ Spring Boot (Backend)</li>
-                            <li>🗄 MySQL (Database)</li>
-                            <li>🔐 JWT Authentication</li>
+                            <li> React + Vite (Frontend)</li>
+                            <li> Tailwind CSS (UI Styling)</li>
+                            <li> Spring Boot (Backend)</li>
+                            <li> MySQL (Database)</li>
+                            <li> JWT Authentication</li>
                         </ul>
                     </section>
+
+                </div>
+
+                <div className="flex flex-col items-center mt-12 gap-2 opacity-90">
+                    <img src={logoFull} alt="DontExpiRe logo" className="w-128" />
 
                 </div>
             </div>

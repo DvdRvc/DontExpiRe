@@ -1,0 +1,20 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="dxGradient" x1="20" y1="20" x2="180" y2="180">
+      <stop stop-color="#22C55E"></stop>
+      <stop offset="1" stop-color="#0F766E"></stop>
+    </linearGradient>
+  </defs>
+
+  <rect x="10" y="10" width="180" height="180" rx="40" fill="url(#dxGradient)"></rect>
+
+  <!-- D -->
+  <path d="M60 60H95C125 60 145 80 145 100C145 120 125 140 95 140H60V60Z" fill="white"></path>
+
+  <path d="M80 80H95C110 80 120 90 120 100C120 110 110 120 95 120H80V80Z" fill="url(#dxGradient)"></path>
+
+  <!-- X -->
+  <path d="M95 65L135 135" stroke="#ECFDF5" stroke-width="12" stroke-linecap="round"></path>
+  <path d="M135 65L95 135" stroke="#D1FAE5" stroke-width="12" stroke-linecap="round"></path>
+
+</svg>

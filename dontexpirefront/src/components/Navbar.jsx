@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import logo from "../assets/logo-icon.svg";
 
 export default function Navbar() {
     return (
@@ -6,7 +7,11 @@ export default function Navbar() {
             <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4 text-white">
 
                 <Link to="/" className="flex items-center gap-2 font-semibold text-lg text-[#27AE60]">
-                    🥬 DontExpiRe
+                    <img
+                        src={logo}
+                        alt="DontExpiRe logo"
+                        className="w-8 h-8"
+                    /> DontExpiRe
                 </Link>
 
                 <div className="flex items-center gap-6 text-sm">
@@ -21,6 +26,11 @@ export default function Navbar() {
                     <Link to="/login" className="hover:text-[#27AE60] transition">
                         Login
                     </Link>
+                    {/*}
+                    <Link to="/profile" className="hover:text-[#27AE60] transition">
+                        Profile
+                    </Link>
+                    */}
                 </div>
 
             </div>
