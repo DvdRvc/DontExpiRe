@@ -38,6 +38,7 @@ public class UserController {
     public ResponseEntity<String> login(@RequestBody LoginRequest request) {
         //userService.login(request);
         String token = userService.verify(request);
+        System.out.println("JWT TOKEN:" + token);
         return ResponseEntity.ok(token);
     }
 

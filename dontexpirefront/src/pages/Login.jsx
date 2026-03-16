@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import FloatingFood from "../components/FloatingFood";
 
 
+
 export default function Login() {
+
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -27,7 +30,12 @@ export default function Login() {
             const text = await response.text();
             console.log("Response from backend:", text);
 
+
+
             if (response.ok) {
+                localStorage.setItem("token",text) //JWT TOKEN
+                navigate("/");// Navigation to page
+
                 setError("");
                 console.log("Login successful:", text);
             } else {
