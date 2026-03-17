@@ -26,11 +26,10 @@ export default function Navbar() {
                     <Link to="/login" className="hover:text-[#27AE60] transition">
                         Login
                     </Link>
-                    {/*}
+
                     <Link to="/profile" className="hover:text-[#27AE60] transition">
                         Profile
                     </Link>
-                    */}
                 </div>
 
             </div>
