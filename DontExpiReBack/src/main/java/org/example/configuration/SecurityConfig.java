@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user-controller/login").permitAll()
                         .requestMatchers("/user-controller/register").permitAll()
+                        .requestMatchers("/product-controller/**").permitAll()
                         .requestMatchers("/about").permitAll()
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()

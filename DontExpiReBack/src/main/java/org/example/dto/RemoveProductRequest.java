@@ -8,5 +8,5 @@ import java.util.Date;
 @Getter
 @Setter
 public class RemoveProductRequest {
-    private int productId;
+    private Long productId;
 }

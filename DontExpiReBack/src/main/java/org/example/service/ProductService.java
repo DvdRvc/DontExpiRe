@@ -7,6 +7,7 @@ import org.example.dto.UpdateProductRequest;
 import org.example.enums.ProductType;
 import org.example.error.ProductNotFoundException;
 import org.example.error.RemoveProductException;
+import org.example.error.TypeDoesntExistYetException;
 import org.example.model.Product;
 import org.example.model.User;
 import org.example.repository.ProductRepository;
@@ -27,7 +28,7 @@ public class ProductService {
 
 
     public void removeProduct(RemoveProductRequest product){
-        Long id = (long) product.getProductId();
+        Long id = product.getProductId();
 
         if(!productRepository.existsById(id)){
             throw new RemoveProductException("This product doesn't exist!");
@@ -55,6 +56,11 @@ public class ProductService {
     }
 
     public List<Product> getProductsByType(ProductType type) {
+
+        if(productRepository.findByProductType(type).isEmpty()){
+            throw new TypeDoesntExistYetException("This type is not in the fridge yet!");
+        }
+
         return productRepository.findByProductType(type);
     }
 

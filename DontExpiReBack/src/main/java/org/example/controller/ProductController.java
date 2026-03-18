@@ -55,7 +55,7 @@ public class ProductController {
         return productService.getProductsExpiringIn(days);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public void updateProduct(@PathVariable Long id, @RequestBody UpdateProductRequest request) {
         productService.updateProduct(id, request);
     }
