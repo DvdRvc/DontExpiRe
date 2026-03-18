@@ -8,7 +8,5 @@ import java.util.Date;
 @Getter
 @Setter
 public class RemoveProductRequest {
-    int productId;
-    String productName;
-    Date productExpiryDate;
+    private int productId;
 }

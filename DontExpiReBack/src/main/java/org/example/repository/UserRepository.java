@@ -15,11 +15,6 @@ import java.util.function.Function;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 
-    default User findByUsername(String username){
-        return null;
-    }
-
-
     Optional<User> findByUserEMail(String userEMail);
 
     boolean existsByUserEMail(String userEMail);

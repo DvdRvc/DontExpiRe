@@ -1,22 +1,18 @@
 package org.example.dto;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.enums.ProductType;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Getter
 @Setter
-public class AddProductRequest {
+public class UpdateProductRequest {
 
     private String productName;
     private String productBrand;
     private LocalDate productExpiryDate;
     private float productPrice;
     private ProductType productType;
-
 }
