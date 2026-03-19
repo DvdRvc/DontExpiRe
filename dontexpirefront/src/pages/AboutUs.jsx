@@ -9,7 +9,7 @@ export default function About() {
                 <FloatingFood />
                 <div className="relative z-10 max-w-5xl mx-auto space-y-16">
 
-                    {/* ABOUT PROJECT */}
+
                     <section>
                         <h1 className="text-4xl font-bold mb-4 text-[#27AE60]">
                             About DontExpiRe
@@ -30,7 +30,7 @@ export default function About() {
                         </p>
                     </section>
 
-                    {/* MISSION */}
+
                     <section>
                         <h2 className="text-2xl font-semibold mb-4 text-[#27AE60]">
                             Our Mission
@@ -45,7 +45,6 @@ export default function About() {
                         </p>
                     </section>
 
-                    {/* CREATOR */}
                     <section>
                         <h2 className="text-2xl font-semibold mb-4 text-[#27AE60]">
                             About the Creator
@@ -60,7 +59,6 @@ export default function About() {
                         </p>
                     </section>
 
-                    {/* TECHNOLOGIES */}
                     <section>
                         <h2 className="text-2xl font-semibold mb-4 text-[#27AE60]">
                             Technology Stack
@@ -72,6 +70,7 @@ export default function About() {
                             <li> Spring Boot (Backend)</li>
                             <li> MySQL (Database)</li>
                             <li> JWT Authentication</li>
+                            <li> Postman</li>
                         </ul>
                     </section>
 
