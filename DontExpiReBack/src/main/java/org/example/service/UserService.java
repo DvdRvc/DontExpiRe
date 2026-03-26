@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.example.dto.LoginRequest;
 import org.example.dto.LoginResponse;
 import org.example.dto.RegisterRequest;
+import org.example.dto.UpdatePasswordRequest;
 import org.example.enums.UserType;
 import org.example.error.*;
 import org.example.model.User;
@@ -123,5 +124,54 @@ public class UserService {
 
     public void removeUser(User user){
         userRepository.delete(user);
+    }
+
+    public void updatePassword(UpdatePasswordRequest updatePasswordRequest){
+
+        System.out.println("USAO U SERVICE");
+        System.out.println("TOKEN: " + updatePasswordRequest.getToken());
+        System.out.println("OLD PASSWORD: " + updatePasswordRequest.getOldPassword());
+        System.out.println("NEW PASSWORD: " + updatePasswordRequest.getNewPassword());
+        System.out.println("NEW PASSWORD AGAIN: " + updatePasswordRequest.getNewPasswordAgain());
+
+        if (updatePasswordRequest.getToken() == null || updatePasswordRequest.getToken().isBlank()) {
+            throw new RuntimeException("Token is missing.");
+        }
+
+        if (updatePasswordRequest.getOldPassword() == null || updatePasswordRequest.getOldPassword().isBlank()) {
+            throw new OldPasswordRequiredException("Old password is required.");
+        }
+
+        if (updatePasswordRequest.getNewPassword() == null || updatePasswordRequest.getNewPassword().isBlank()) {
+            throw new NewPasswordRequiredException("New password is required.");
+        }
+
+        if (updatePasswordRequest.getNewPasswordAgain() == null || updatePasswordRequest.getNewPasswordAgain().isBlank()) {
+            throw new RepeatPasswordRequiredException("Please repeat the new password.");
+        }
+
+        if (!updatePasswordRequest.getNewPassword().equals(updatePasswordRequest.getNewPasswordAgain())) {
+            throw new PasswordNotMatchException("New passwords do not match.");
+        }
+
+        if (updatePasswordRequest.getNewPassword().length() < 8) {
+            throw new InvalidPasswordLength("New password must have at least 8 characters.");
+        }
+
+        String email = jwtService.extractEmail(updatePasswordRequest.getToken());
+
+        User user = userRepository.findByUserEMail(email)
+                .orElseThrow(() -> new UserNotFoundException("User not found."));
+
+        if (!passwordEncoder.matches(updatePasswordRequest.getOldPassword(), user.getUserPassword())) {
+            throw new WrongPasswordException("Old password is incorrect.");
+        }
+
+        if (passwordEncoder.matches(updatePasswordRequest.getNewPassword(), user.getUserPassword())) {
+            throw new NewOldPasswordSameException("New password cannot be the same as the old password.");
+        }
+
+        user.setUserPassword(passwordEncoder.encode(updatePasswordRequest.getNewPassword()));
+        userRepository.save(user);
     }
 }

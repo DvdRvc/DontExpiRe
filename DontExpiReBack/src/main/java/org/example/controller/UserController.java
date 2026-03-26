@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.example.dto.LoginRequest;
 import org.example.dto.LoginResponse;
 import org.example.dto.RegisterRequest;
+import org.example.dto.UpdatePasswordRequest;
 import org.example.error.InvadlidEmailForm;
 import org.example.error.InvalidPasswordLength;
 import org.example.error.InvalidUserNameLength;
@@ -71,6 +72,13 @@ public class UserController {
         LoginResponse response = userService.verify(request);
         System.out.println("JWT TOKEN: " + response.getToken());
         return ResponseEntity.ok(response);
+    }
+
+
+    @PostMapping("/change-password")
+    public ResponseEntity<String> updatePassword(@RequestBody UpdatePasswordRequest updatePasswordRequest){
+        userService.updatePassword(updatePasswordRequest);
+        return ResponseEntity.ok("Password changed");
     }
 
 

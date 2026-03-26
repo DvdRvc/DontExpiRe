@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user-controller/login").permitAll()
+                        .requestMatchers("/user-controller/change-password").permitAll()
                         .requestMatchers("/user-controller/register").permitAll()
                         //.requestMatchers("/product-controller/**").hasAnyAuthority("USER","SUBSCRIBER")
                         .requestMatchers("/product-controller/**").permitAll()

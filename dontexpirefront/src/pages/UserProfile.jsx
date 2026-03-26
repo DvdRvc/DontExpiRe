@@ -91,17 +91,20 @@ export default function UserProfilePage() {
             const token = localStorage.getItem("token");
 
             const response = await fetch("http://localhost:8080/user-controller/change-password", {
-                method: "PUT",
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({
-                    currentPassword: passwordData.currentPassword,
+                    token: token,
+                    oldPassword: passwordData.currentPassword,
                     newPassword: passwordData.newPassword,
+                    newPasswordAgain: passwordData.confirmPassword
                 }),
             });
 
+
+            console.log("TOKEN IZ LOCAL STORAGE:", token);
             const text = await response.text();
 
             if (!response.ok) {
