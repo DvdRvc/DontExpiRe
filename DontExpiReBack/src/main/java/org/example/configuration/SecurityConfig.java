@@ -39,9 +39,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user-controller/login").permitAll()
                         .requestMatchers("/user-controller/register").permitAll()
+                        //.requestMatchers("/product-controller/**").hasAnyAuthority("USER","SUBSCRIBER")
                         .requestMatchers("/product-controller/**").permitAll()
                         .requestMatchers("/about").permitAll()
-                        .requestMatchers("/error").permitAll()
+                        //.requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()
                 )
                 //.httpBasic(Customizer.withDefaults())

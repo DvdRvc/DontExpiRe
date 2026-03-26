@@ -12,7 +12,7 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-
+/*
     const handleLogin = async (e) => {
         e.preventDefault();
 
@@ -47,6 +47,51 @@ export default function Login() {
             setError("Cannot connect to server");
         }
     };
+
+ */
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch("http://localhost:8080/user-controller/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    userEMail: email,
+                    userPassword: password,
+                }),
+            });
+
+            const data = await response.json();
+            console.log("Response from backend:", data);
+
+            if (response.ok) {
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("userType", data.userType);
+                console.log("TOKEN POSLE LOGINA:", localStorage.getItem("token"));
+
+
+                navigate("/");
+                setError("");
+                console.log("Login successful:", data);
+            } else {
+                setError("Login failed: E-mail or password is wrong!");
+            }
+        } catch (error) {
+            console.error("Connection error:", error);
+            setError("Cannot connect to server");
+        }
+    };
+
+    const handleContinueAsGuest = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userType");
+        navigate("/home");
+    };
+
 
 
     return (
@@ -175,6 +220,7 @@ export default function Login() {
 
                         <button
                             type="button"
+                            onClick={handleContinueAsGuest}
                             className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white transition hover:bg-white/10"
                         >
                             Continue as guest

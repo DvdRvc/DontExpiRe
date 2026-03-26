@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.example.enums.UserType;
 
 @Getter
 @Setter
@@ -24,6 +25,8 @@ public class User {
     String userEMail;
     @Enumerated(EnumType.STRING)
     UserGender userGender;
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
 
 
 }

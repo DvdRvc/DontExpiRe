@@ -1,15 +1,22 @@
 import { useState,useEffect } from "react";
 import FloatingFoods from "../components/FloatingFood.jsx";
+import { useNavigate } from "react-router-dom";
+
 
 
 export default function HomePage() {
     const [fridgeOpen, setFridgeOpen] = useState(false);
     const [freezerOpen, setFreezerOpen] = useState(false);
 
+    console.log("TOKEN U HOME:", localStorage.getItem("token"));
+
 
     const [products, setProducts] = useState([]);
 
     const [editModalOpen, setEditModalOpen] = useState(false);
+
+
+    const navigate = useNavigate();
 
     const [editForm, setEditForm] = useState({
         productId: "",
@@ -63,6 +70,8 @@ export default function HomePage() {
         if (daysLeft <= 3) return `Expires in ${daysLeft} day${daysLeft > 1 ? "s" : ""}`;
         return "Fresh";
     };
+
+
 
     const handleFridgeInputChange = (e) => {
         const { name, value } = e.target;
@@ -260,6 +269,39 @@ export default function HomePage() {
     }, []);
 
 
+    const handleFridgeClick = () => {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            navigate("/login");
+            return;
+        }
+
+        setFridgeOpen(true);
+    };
+
+    const handleFreezerClick = () => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate("/login");
+            return;
+        }
+
+        console.log("TOKEN:", token);
+        console.log("LOCAL STORAGE TOKEN:", localStorage.getItem("token"));
+
+        setFreezerOpen(true);
+    };;
+
+    const handleProtectedAction = () => {
+        if (!token) {
+            navigate("/login");
+            return;
+        }
+
+
+    };
+
 
     {/* Shelf levels*/}
 
@@ -338,7 +380,7 @@ export default function HomePage() {
                             <div className="absolute top-0 left-0 w-full h-[28%] border-b-4 border-neutral-500 bg-neutral-300">
                                 {!freezerOpen && (
                                     <button
-                                        onClick={() => setFreezerOpen(true)}
+                                        onClick={() => handleFreezerClick(true)}
                                         className="absolute inset-0 w-full h-full rounded-t-[2.8rem] bg-gradient-to-br from-neutral-200 to-neutral-400 hover:brightness-105 transition"
                                     >
                                         <div className="absolute right-6 top-1/2 -translate-y-1/2 w-3 h-24 rounded-full bg-neutral-700" />
@@ -439,11 +481,12 @@ export default function HomePage() {
                                 )}
                             </div>
 
-
+                            {/* <div onClick={() => setIsFridgeOpen(true)}> */}
                             <div className="absolute bottom-0 left-0 w-full h-[72%] bg-neutral-200">
                                 {!fridgeOpen && (
                                     <button
-                                        onClick={() => setFridgeOpen(true)}
+                                        onClick={handleFridgeClick}
+
                                         className="absolute inset-0 w-full h-full rounded-b-[2.8rem] bg-gradient-to-br from-neutral-100 to-neutral-400 hover:brightness-105 transition"
                                     >
                                         <div className="absolute right-6 top-1/2 -translate-y-1/2 w-3 h-36 rounded-full bg-neutral-700" />

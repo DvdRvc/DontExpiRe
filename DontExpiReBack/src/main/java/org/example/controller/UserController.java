@@ -2,6 +2,7 @@ package org.example.controller;
 
 import lombok.AllArgsConstructor;
 import org.example.dto.LoginRequest;
+import org.example.dto.LoginResponse;
 import org.example.dto.RegisterRequest;
 import org.example.error.InvadlidEmailForm;
 import org.example.error.InvalidPasswordLength;
@@ -53,12 +54,23 @@ public class UserController {
         }
     }
 
+    /*
+
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest request) {
         //userService.login(request);
         String token = userService.verify(request);
         System.out.println("JWT TOKEN:" + token);
         return ResponseEntity.ok(token);
+    }
+
+     */
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        LoginResponse response = userService.verify(request);
+        System.out.println("JWT TOKEN: " + response.getToken());
+        return ResponseEntity.ok(response);
     }
 
 

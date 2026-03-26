@@ -11,6 +11,7 @@ export default function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [userName, setUserName] = useState("");
+   // const [userType, setUserType] = useState("USER");
     const [error, setError] = useState("");
 
     const handleRegister = async (e) => {
@@ -26,6 +27,7 @@ export default function Register() {
                     userName: userName,
                     userEMail: email,
                     userPassword: password,
+
                 }),
             });
 

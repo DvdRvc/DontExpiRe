@@ -2,6 +2,10 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo-icon.svg";
 
 export default function Navbar() {
+    console.log("TOKEN U NAVBARU:", localStorage.getItem("token"));
+
+
+
     return (
         <nav className="w-full bg-[#121212] border-b border-white/10">
             <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4 text-white">
@@ -30,6 +34,7 @@ export default function Navbar() {
                     <Link to="/profile" className="hover:text-[#27AE60] transition">
                         Profile
                     </Link>
+
                 </div>
 
             </div>

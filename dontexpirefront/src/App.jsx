@@ -5,7 +5,7 @@ import { Routes, Route } from "react-router-dom"
 import Login from "./pages/Login.jsx";
 import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
-
+import ProtectedRoute from "./utils/ProtectedRoute";
 import UserProfile from "./pages/UserProfile.jsx";
 
 export default function App() {
@@ -14,12 +14,19 @@ export default function App() {
             <Navbar />
 
             <Routes>
+                <Route path="/home" element={<Home />} />
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<AboutUs />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-
-                <Route path="/profile" element={<UserProfile />} />
+                <Route
+                    path="/profile"
+                    element={
+                        <ProtectedRoute>
+                            <UserProfile />
+                        </ProtectedRoute>
+                    }
+                />
             </Routes>
         </div>
     );

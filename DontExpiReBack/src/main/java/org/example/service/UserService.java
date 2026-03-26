@@ -2,12 +2,15 @@ package org.example.service;
 
 import lombok.AllArgsConstructor;
 import org.example.dto.LoginRequest;
+import org.example.dto.LoginResponse;
 import org.example.dto.RegisterRequest;
+import org.example.enums.UserType;
 import org.example.error.*;
 import org.example.model.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -55,6 +58,7 @@ public class UserService {
 
         user.setUserName(request.getUserName());
         user.setUserEMail(request.getUserEMail());
+        user.setUserType(UserType.USER);
 
 
         user.setUserPassword(
@@ -77,7 +81,7 @@ public class UserService {
 
     }
 
-    public String verify(LoginRequest loginRequest){
+    /*public String verify(LoginRequest loginRequest){
 
         Authentication authentication =
                 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUserEMail(),loginRequest.getUserPassword()));
@@ -87,6 +91,33 @@ public class UserService {
         }
 
         return jwtService.generateToken(loginRequest.getUserEMail());
+    }
+
+     */
+
+    public LoginResponse verify(LoginRequest loginRequest) {
+
+        Authentication authentication =
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                loginRequest.getUserEMail(),
+                                loginRequest.getUserPassword()
+                        )
+                );
+
+        if (!authentication.isAuthenticated()) {
+            throw new InvalidAuthenticationJWT("Authentication failed!");
+        }
+
+        User user = userRepository.findByUserEMail(loginRequest.getUserEMail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        String token = jwtService.generateToken(
+                user.getUserEMail(),
+                user.getUserType().name()
+        );
+
+        return new LoginResponse(token, user.getUserType().name());
     }
 
 
