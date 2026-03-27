@@ -53,8 +53,8 @@ export default function UserProfilePage() {
         try {
             const token = localStorage.getItem("token");
 
-            const response = await fetch("http://localhost:8080/user-controller/profile", {
-                method: "PUT",
+            const response = await fetch("http://localhost:8080/user-controller/update-profile", {
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,

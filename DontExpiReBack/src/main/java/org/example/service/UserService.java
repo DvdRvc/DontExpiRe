@@ -1,10 +1,8 @@
 package org.example.service;
 
 import lombok.AllArgsConstructor;
-import org.example.dto.LoginRequest;
-import org.example.dto.LoginResponse;
-import org.example.dto.RegisterRequest;
-import org.example.dto.UpdatePasswordRequest;
+import org.example.dto.*;
+import org.example.enums.UserGender;
 import org.example.enums.UserType;
 import org.example.error.*;
 import org.example.model.User;
@@ -173,5 +171,43 @@ public class UserService {
 
         user.setUserPassword(passwordEncoder.encode(updatePasswordRequest.getNewPassword()));
         userRepository.save(user);
+    }
+
+    public void updateProfile(UpdateProfileRequest updateProfileRequest, String authHeader){
+
+        String token = authHeader.substring(7);
+        String email = jwtService.extractEmail(token);
+
+        User user = userRepository.findByUserEMail(email)
+                .orElseThrow(() -> new UserNotFoundException("User not found."));
+
+
+        if (updateProfileRequest.getUserName() == null || updateProfileRequest.getUserName().trim().isEmpty()) {
+            throw new EmptyUsernameSlotException("Username cannot be empty.");
+        }
+
+        String newUserName = updateProfileRequest.getUserName().trim();
+
+        if (newUserName.length() < 5) {
+            throw new InvalidUserNameLength("Username must have at least 5 characters.");
+        }
+
+        if (newUserName.length() > 15) {
+            throw new ToLongUsernameException("Username cannot have more than 15 characters.");
+        }
+
+        UserGender gender;
+        try {
+            gender = UserGender.valueOf(updateProfileRequest.getUserGender().trim().toUpperCase());
+        } catch (Exception e) {
+            throw new GenderFormException("Invalid gender value. Allowed values are: MALE, FEMALE.");
+        }
+
+
+        user.setUserName(updateProfileRequest.getUserName());
+        user.setUserGender(gender);
+
+        userRepository.save(user);
+
     }
 }

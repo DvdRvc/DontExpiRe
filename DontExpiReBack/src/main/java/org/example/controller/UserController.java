@@ -1,10 +1,7 @@
 package org.example.controller;
 
 import lombok.AllArgsConstructor;
-import org.example.dto.LoginRequest;
-import org.example.dto.LoginResponse;
-import org.example.dto.RegisterRequest;
-import org.example.dto.UpdatePasswordRequest;
+import org.example.dto.*;
 import org.example.error.InvadlidEmailForm;
 import org.example.error.InvalidPasswordLength;
 import org.example.error.InvalidUserNameLength;
@@ -79,6 +76,12 @@ public class UserController {
     public ResponseEntity<String> updatePassword(@RequestBody UpdatePasswordRequest updatePasswordRequest){
         userService.updatePassword(updatePasswordRequest);
         return ResponseEntity.ok("Password changed");
+    }
+
+    @PostMapping("/update-profile")
+    public ResponseEntity<String> updateProfile(@RequestBody UpdateProfileRequest updateProfileRequest,  @RequestHeader("Authorization") String authHeader){
+        userService.updateProfile(updateProfileRequest,authHeader);
+        return ResponseEntity.ok("Profile information changed");
     }
 
 

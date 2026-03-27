@@ -29,6 +29,10 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        System.out.println("=== JWT FILTER HIT ===");
+        System.out.println("PATH: " + request.getRequestURI());
+        System.out.println("METHOD: " + request.getMethod());
+
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String userEmail = null;
