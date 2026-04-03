@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import FloatingFood from "../components/FloatingFood.jsx";
 import logoFull from "../assets/full-logo.svg";
 
@@ -17,8 +17,48 @@ export default function UserProfilePage() {
     const [profileImage, setProfileImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
 
+    const [profilePicture, setProfilePicture] = useState(null);
+
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const token = localStorage.getItem("token");
+
+                const res = await fetch("http://localhost:8080/user-controller/profile", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                const text = await res.text();
+                console.log("PROFILE RESPONSE:", res.status, text);
+
+                if (!res.ok) {
+                    throw new Error(text || "Failed to load profile.");
+                }
+
+                const data = JSON.parse(text);
+
+                if (data.profilePicture) {
+                    setProfilePicture(`http://localhost:8080${data.profilePicture}`);
+                }
+
+                setProfileData({
+                    username: data.userName || "",
+                    gender: data.userGender || "",
+                });
+            } catch (err) {
+                localStorage.removeItem("token");
+                localStorage.removeItem("userType");
+                setError(err.message);
+            }
+        };
+
+        fetchProfile();
+    }, []);
 
     const handleProfileChange = (e) => {
         const { name, value } = e.target;
@@ -137,7 +177,7 @@ export default function UserProfilePage() {
             const formData = new FormData();
             formData.append("image", profileImage);
 
-            const response = await fetch("http://localhost:8080/user-controller/profile-image", {
+            const response = await fetch("http://localhost:8080/user-controller/update-profile-pic", {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -146,11 +186,15 @@ export default function UserProfilePage() {
             });
 
             const text = await response.text();
+            console.log("UPLOAD RESPONSE:", text);
 
             if (!response.ok) {
                 throw new Error(text || "Failed to upload image.");
             }
 
+            setProfilePicture(`http://localhost:8080${text}?t=${Date.now()}`);
+            setImagePreview(null);
+            setProfileImage(null);
             setMessage("Profile image uploaded successfully.");
         } catch (err) {
             setError(err.message);
@@ -228,10 +272,10 @@ export default function UserProfilePage() {
 
                         <div className="flex flex-col items-center mb-5">
                             <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-neutral-700 bg-neutral-800 flex items-center justify-center mb-4">
-                                {imagePreview ? (
+                                {imagePreview || profilePicture ? (
                                     <img
-                                        src={imagePreview}
-                                        alt="Profile preview"
+                                        src={imagePreview || profilePicture}
+                                        alt="Profile"
                                         className="w-full h-full object-cover"
                                     />
                                 ) : (

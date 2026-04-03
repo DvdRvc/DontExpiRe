@@ -1,6 +1,8 @@
 package org.example.service;
 
+import io.jsonwebtoken.io.IOException;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.example.dto.*;
 import org.example.enums.UserGender;
 import org.example.enums.UserType;
@@ -14,8 +16,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.example.repository.UserRepository;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -45,7 +53,7 @@ public class UserService {
             throw new InvalidUserNameLength("Name must have at least 5 characters!");
         }
 
-        if(!request.getUserEMail().contains("@gmail") || !request.getUserEMail().contains("@")){
+        if(!request.getUserEMail().contains("@gmail.com") || !request.getUserEMail().contains("@")){
             throw new InvadlidEmailForm("The E-mail form is not valid.");
         }
 
@@ -80,19 +88,20 @@ public class UserService {
 
     }
 
-    /*public String verify(LoginRequest loginRequest){
+    public UserProfileResponse getProfile(String token) {
+        String email = jwtService.extractEmail(token);
 
-        Authentication authentication =
-                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUserEMail(),loginRequest.getUserPassword()));
+        User user = userRepository.findByUserEMail(email)
+                .orElseThrow(() -> new RuntimeException("User not found."));
 
-        if(!authentication.isAuthenticated()){
-            throw new InvalidAuthenticationJWT("Authentication failed!");
-        }
-
-        return jwtService.generateToken(loginRequest.getUserEMail());
+        return new UserProfileResponse(
+                user.getUserName(),
+                user.getUserGender() != null ? user.getUserGender().name() : null,
+                user.getProfilePicture()
+        );
     }
 
-     */
+
 
     public LoginResponse verify(LoginRequest loginRequest) {
 
@@ -209,5 +218,51 @@ public class UserService {
 
         userRepository.save(user);
 
+    }
+
+
+    @SneakyThrows
+    public String updateProfilePicture(String token, MultipartFile image) throws IOException {
+        if (image == null || image.isEmpty()) {
+            throw new RuntimeException("Image is empty.");
+        }
+
+        String contentType = image.getContentType();
+        if (contentType == null ||
+                (!contentType.equals("image/jpeg") &&
+                        !contentType.equals("image/png") &&
+                        !contentType.equals("image/jpg") &&
+                        !contentType.equals("image/webp"))) {
+            throw new RuntimeException("Only JPG, PNG and WEBP images are allowed.");
+        }
+
+        if (image.getSize() > 5 * 1024 * 1024) {
+            throw new RuntimeException("Image must be smaller than 5MB.");
+        }
+
+        String email = jwtService.extractEmail(token);
+        User user = userRepository.findByUserEMail(email)
+                .orElseThrow(() -> new RuntimeException("User not found."));
+
+        Path uploadPath = Paths.get(System.getProperty("user.dir"), "uploads", "profile-pictures");
+        Files.createDirectories(uploadPath);
+
+        String originalFileName = image.getOriginalFilename();
+        String extension = "";
+
+        if (originalFileName != null && originalFileName.contains(".")) {
+            extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+        }
+
+        String fileName = UUID.randomUUID() + extension;
+        Path filePath = uploadPath.resolve(fileName);
+
+        image.transferTo(filePath.toFile());
+
+        String dbPath = "/uploads/profile-pictures/" + fileName;
+        user.setProfilePicture(dbPath);
+        userRepository.save(user);
+
+        return dbPath;
     }
 }

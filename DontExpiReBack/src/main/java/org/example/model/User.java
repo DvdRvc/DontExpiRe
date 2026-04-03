@@ -27,6 +27,8 @@ public class User {
     UserGender userGender;
     @Enumerated(EnumType.STRING)
     private UserType userType;
+    @Column(name = "profile_picture")
+    private String profilePicture;
 
 
 }

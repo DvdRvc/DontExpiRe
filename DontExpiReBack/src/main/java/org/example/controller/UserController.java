@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.example.service.UserService;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -84,6 +85,34 @@ public class UserController {
         return ResponseEntity.ok("Profile information changed");
     }
 
+
+    @PostMapping("/update-profile-pic")
+    public ResponseEntity<String> updateProfilePicture(
+            @RequestHeader("Authorization") String authHeader,
+            @RequestParam("image") MultipartFile image
+    ) {
+        try {
+            String token = authHeader.substring(7);
+            String imagePath = userService.updateProfilePicture(token, image);
+
+            return ResponseEntity.ok(imagePath); // 👈 ovo
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<?> getProfile(
+            @RequestHeader("Authorization") String authHeader
+    ) {
+        try {
+            String token = authHeader.substring(7);
+            UserProfileResponse response = userService.getProfile(token);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(403).body(e.getMessage());
+        }
+    }
 
 
 

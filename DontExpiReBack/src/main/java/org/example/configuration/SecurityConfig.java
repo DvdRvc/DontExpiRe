@@ -36,17 +36,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity
+                .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/user-controller/login").permitAll()
                         .requestMatchers("/user-controller/change-password").permitAll()
                         .requestMatchers("/user-controller/register").permitAll()
-                        .requestMatchers("/user-controller/update-profile").authenticated()
-                        //.requestMatchers("/product-controller/**").hasAnyAuthority("USER","SUBSCRIBER")
+                        .requestMatchers("/user-controller/profile").authenticated()
+                        .requestMatchers("/user-controller/update-profile-pic").authenticated()
                         .requestMatchers("/product-controller/**").permitAll()
+                        .requestMatchers("/uploads/**").permitAll()
                         .requestMatchers("/about").permitAll()
-                        //.requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()
                 )
                 //.httpBasic(Customizer.withDefaults())
