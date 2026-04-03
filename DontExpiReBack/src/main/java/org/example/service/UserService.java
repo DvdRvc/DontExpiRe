@@ -92,7 +92,7 @@ public class UserService {
         String email = jwtService.extractEmail(token);
 
         User user = userRepository.findByUserEMail(email)
-                .orElseThrow(() -> new RuntimeException("User not found."));
+                .orElseThrow(() -> new UserNotFoundException("User not found."));
 
         return new UserProfileResponse(
                 user.getUserName(),
@@ -224,7 +224,7 @@ public class UserService {
     @SneakyThrows
     public String updateProfilePicture(String token, MultipartFile image) throws IOException {
         if (image == null || image.isEmpty()) {
-            throw new RuntimeException("Image is empty.");
+            throw new ImageEmptyException("Image is empty.");
         }
 
         String contentType = image.getContentType();
@@ -233,16 +233,16 @@ public class UserService {
                         !contentType.equals("image/png") &&
                         !contentType.equals("image/jpg") &&
                         !contentType.equals("image/webp"))) {
-            throw new RuntimeException("Only JPG, PNG and WEBP images are allowed.");
+            throw new ImageFormatException("Only JPG, PNG and WEBP images are allowed.");
         }
 
         if (image.getSize() > 5 * 1024 * 1024) {
-            throw new RuntimeException("Image must be smaller than 5MB.");
+            throw new ImageSizeException("Image must be smaller than 5MB.");
         }
 
         String email = jwtService.extractEmail(token);
         User user = userRepository.findByUserEMail(email)
-                .orElseThrow(() -> new RuntimeException("User not found."));
+                .orElseThrow(() -> new UserNotFoundException("User not found."));
 
         Path uploadPath = Paths.get(System.getProperty("user.dir"), "uploads", "profile-pictures");
         Files.createDirectories(uploadPath);
