@@ -22,37 +22,21 @@
 
 # \- JWT Authentication
 
+
+
 # 
 
 # \## Screenshots
 
 # 
 
-# \### Main Page
+# !\[Main](./dontexpirefront/screenshots/MainPage.png)
 
-# !\[Main](dontexpirefront/screenshots/MainPage.png)
+# !\[Fridge](./dontexpirefront/screenshots/OpenFrigde.png)
 
-# 
+# !\[Profile](./dontexpirefront/screenshots/UserProfilePage.png)
 
-# \### Open Fridge
+# !\[Login](./dontexpirefront/screenshots/loginPage.png)
 
-# !\[Fridge](dontexpirefront/screenshots/OpenFrigde.png)
-
-# 
-
-# \### User Profile
-
-# !\[Profile](dontexpirefront/screenshots/UserProfilePage.png)
-
-# 
-
-# \### Login
-
-# !\[Login](dontexpirefront/screenshots/loginPage.png)
-
-# 
-
-# \### About
-
-# !\[About](dontexpirefront/screenshots/AboutUsPage.png)
+# !\[About](./dontexpirefront/screenshots/AboutUsPage.png)
 
