@@ -70,6 +70,7 @@ export default function About() {
                             <li> Spring Boot (Backend)</li>
                             <li> MySQL (Database)</li>
                             <li> JWT Authentication</li>
+                            <li> REST API</li>
                             <li> Postman</li>
                         </ul>
                     </section>
