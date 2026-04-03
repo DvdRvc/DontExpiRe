@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
 import FloatingFood from "../components/FloatingFood.jsx";
 import logoFull from "../assets/full-logo.svg";
 
@@ -21,6 +22,8 @@ export default function UserProfilePage() {
 
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -83,6 +86,12 @@ export default function UserProfilePage() {
 
         setProfileImage(file);
         setImagePreview(URL.createObjectURL(file));
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userType");
+        navigate("/login");
     };
 
     const handleSaveProfile = async (e) => {
@@ -350,7 +359,21 @@ export default function UserProfilePage() {
                     </form>
                 </div>
                 <div className="flex flex-col items-center mt-12 gap-2 opacity-90">
-                    <img src={logoFull} alt="DontExpiRe logo" className="w-128" />
+                    <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 shadow-lg mt-6">
+                        <h2 className="text-xl font-semibold mb-4">Account</h2>
+                        <p className="text-neutral-400 mb-4">
+                            Log out from your account on this device.
+                        </p>
+
+                        <button
+                            onClick={handleLogout}
+                            className="rounded-xl bg-red-600 px-5 py-3 font-semibold text-white hover:bg-red-700 transition"
+                        >
+                            Logout
+                        </button>
+                    </div>
+
+                    {/*<img src={logoFull} alt="DontExpiRe logo" className="w-128" /> */}
 
                 </div>
             </div>
